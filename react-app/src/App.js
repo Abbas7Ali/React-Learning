@@ -1,41 +1,53 @@
 import "./App.css";
-import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 
-function useInput(initialValue) {
-  const [value, setValue] =
-    useState(initialValue);
-  return [
-    {
-      value,
-      onChange: (e) => setValue(e.target.value)
-    },
-    () => setValue(initialValue)
-  ];
-}
-
-function App() {
-  const [titleProps, resetTitle] = useInput("");
-  const [colorProps, resetColor] =
-    useState("#000000");
-  const submit = (e) => {
-    e.preventDefault();
-    alert(
-      `${titleProps.value}, ${colorProps.value}`
-    );
-    resetTitle();
-    resetColor();
-  };
+function Home() {
   return (
-    <form onSubmit={submit}>
-      <input
-        {...titleProps}
-        type="text"
-        placeholder="color title..."
-      />
-      <input {...colorProps} type="color" />
-      <button>ADD</button>
-    </form>
+    <div>
+      <nav>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+      <h1>My Website</h1>
+    </div>
   );
 }
 
-export default App;
+export function About() {
+  return (
+    <div>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+      <h1>About Us</h1>
+      <Outlet />
+    </div>
+  );
+}
+
+export function History() {
+  return (
+    <div>
+      <h1>Our History</h1>
+    </div>
+  );
+}
+
+export function Contact() {
+  return (
+    <div>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+      <h1>Contact Us</h1>
+    </div>
+  );
+}
+
+export function App() {
+  return <Home />;
+}
